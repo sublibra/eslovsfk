@@ -30,8 +30,10 @@ driver.quit()
 
 ## Copy file to home page
 cal_file = os.path.expanduser( '~' ) + '/Downloads/Kalender.ics'
+cnopts = pysftp.CnOpts()
+cnopts.hostkeys = None
 if os.path.exists(cal_file):
-  with pysftp.Connection(config('SFTP-HOST'), username=config('SFTP-USER'), password=config('SFTP-PASS')) as sftp:
+  with pysftp.Connection(config('SFTP-HOST'), username=config('SFTP-USER'), password=config('SFTP-PASS'), cnopts=cnopts) as sftp:
    with sftp.cd('wp-content/uploads'): 
       sftp.put(cal_file)  
   os.remove(cal_file)
